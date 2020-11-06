@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:flutter_customs/flutter_customs.dart';
+import 'package:dart_standard/dart_standard.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 class ThePirateBay{
   static String _serverUrl = 'https://apibay.org/';
@@ -144,7 +145,10 @@ class ThePirateBay{
       (jsonDecode(await _listFiles(id)) as List).
       map((file) => new TorrentContent(
         name: file['name']['0'],
-        size: _formatBytes(int.parse(file['size']['0']), 2),),).
+        size: _formatBytes(int.parse(file['size']['0']), 2),
+        //name: (()=> file['name']['0']).handleError(onError: (_)=> file['name'][0]),
+        //size: _formatBytes(int.parse((()=> file['size']['0']).handleError(onError: (_)=> file['size'][0])), 2),
+      ),).
       toList();
 
   static String _formatBytes(int bytes, int decimals) => bytes <= 0 ? "0 B" :

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_customs/flutter_customs.dart';
+import 'package:dart_standard/dart_standard.dart';
+import 'package:flutter/services.dart';
 import 'the_pirate_bay.dart';
 
 class TorrentDetailsPage extends StatefulWidget{
@@ -19,34 +20,42 @@ class _TorrentDetailsPageState extends State<TorrentDetailsPage> {
     });
   }
 
-  @override Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(),
-    body: ListView(
-      children: [
-        ListTile(title: Text(widget.torrent.name, style: Theme.of(context).textTheme.headline6,),),
-        FutureBuilder(
-          future: fileList,
-          builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting ?
-          LinearProgressIndicator() :
-          snapshot.hasData ? (snapshot.data as List<TorrentContent>).let((files) => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: Text('Available files'),
-                dense: true,),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: files.length,
-                itemBuilder: (context, index) => files[index].let((file) => ListTile(
-                  leading: Icon(Icons.attach_file),
-                  onTap: (){},
-                  title: Text(file.name,),
-                  subtitle: Text(file.size,),),),),
-            ],),) :
-          ListTile(title: Text('No files available'),),
-        ),
-      ],
+  @override Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
+    value: SystemUiOverlayStyle(
+      statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+      statusBarBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark,
+      statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark ? Brightness.light : Brightness.dark,
+    ),
+    child: Scaffold(
+      appBar: AppBar(),
+      body: ListView(
+        children: [
+          ListTile(title: Text(widget.torrent.name, style: Theme.of(context).textTheme.headline6,),),
+          FutureBuilder(
+            future: fileList,
+            builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting ?
+            LinearProgressIndicator() :
+            snapshot.hasData ? (snapshot.data as List<TorrentContent>).let((files) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  title: Text('Available files'),
+                  dense: true,),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: files.length,
+                  itemBuilder: (context, index) => files[index].let((file) => ListTile(
+                    leading: Icon(Icons.attach_file),
+                    onTap: (){},
+                    title: Text(file.name,),
+                    subtitle: Text(file.size,),),),),
+              ],),) :
+            ListTile(title: Text('No files available'),),
+          ),
+        ],
+      ),
     ),
   );
 }

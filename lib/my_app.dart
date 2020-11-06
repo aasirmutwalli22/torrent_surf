@@ -8,23 +8,30 @@ class MyApp extends StatelessWidget {
     debugShowCheckedModeBanner: false,
     title: 'Flutter Demo',
     theme: ThemeData.light().copyWith(
-        primaryColor: Colors.indigo[500],
-        accentColor: Colors.red[500],
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        appBarTheme: AppBarTheme.of(context).copyWith(color: Colors.blue,
-            textTheme: Theme.of(context).textTheme.apply(
-
-            ),
-            iconTheme: IconTheme.of(context).copyWith(
-              color: Colors.red,
-            )
-        )
+      primaryColor: Colors.indigo[500],
+      accentColor: Colors.red[500],
+      scaffoldBackgroundColor: Colors.white,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      appBarTheme: AppBarTheme.of(context).copyWith(
+        elevation: 0,
+        color: Colors.white,
+        brightness: Theme.of(context).brightness,
+        textTheme: Theme.of(context).textTheme.apply(),
+        iconTheme: IconTheme.of(context).copyWith(color: Colors.grey[800],),
+      ),
     ),
     darkTheme: ThemeData.dark().copyWith(
       primaryColor: Colors.indigo[300],
       accentColor: Colors.red[300],
       scaffoldBackgroundColor: Colors.grey[900],
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      appBarTheme: AppBarTheme.of(context).copyWith(
+        elevation: 0,
+        color: Colors.grey[900],
+        brightness: Theme.of(context).brightness,
+        textTheme: Theme.of(context).textTheme.apply(),
+        iconTheme: IconTheme.of(context).copyWith(color: Colors.white,),
+      ),
     ),
     home: TorrentSearchPage(),
   );

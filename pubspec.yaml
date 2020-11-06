@@ -13,9 +13,12 @@ dependencies:
   cupertino_icons: ^0.1.3
   http: 0.12.2
   url_launcher: 5.5.2
-  flutter_customs:
+  floating_search_bar: 0.3.0
+  dart_standard:
     git:
-      url: https://github.com/aasirmutwalli22/flutter_customs.git
+      url: git://github.com/aasirmutwalli22/flutter_customs.git
+      ref: loose_packages
+      path: plugins/dart_standard
 
 dev_dependencies:
   flutter_test:
