@@ -118,7 +118,7 @@ class _TorrentSearchPageState extends State<TorrentSearchPage> {
         autofocus: false,
         cursorColor: accentColor,
         decoration: InputDecoration.collapsed(hintText: "Search torrent",),
-        onSubmitted: (query) => setState(()=> torrentRequest = ThePirateBay.searchTorrents(query)),
+        // onSubmitted: (query) => setState(()=> torrentRequest = ThePirateBay.searchTorrents(query)),
         textInputAction: TextInputAction.search,
       ),
       toolbarHeight: 50,

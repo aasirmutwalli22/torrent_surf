@@ -124,32 +124,52 @@ class ThePirateBay{
     699: "Other"//
   };
 
-  static Future<String> _listFiles(String id) async => (await http.get(_listFilesUrl + Uri.encodeComponent(id))).body;
-  static Future<String> _search(String query) async => (await http.get(_searchUrl + Uri.encodeComponent(query))).body;
-  static Future<List<Torrent>> searchTorrents(String query) async =>
-      (jsonDecode(await _search(query)) as List).
-      map((torrent) => new Torrent(
-        added: torrent['added'],
-        category: _categories[int.parse(torrent['category'])],
-        categoryIcon: _categoriesIcons[int.parse(torrent['category'])],
-        id: torrent['id'],
-        leechers: torrent['leechers'],
-        magnetUrl: _magnetUrl(torrent['info_hash'], torrent['name']),
-        name: torrent['name'],
-        num_files: torrent['num_files'],
-        seeders: torrent['seeders'],
-        size: _formatBytes(int.parse(torrent['size']), 2),
-        username: torrent['username'],),).
-      toList();
-  static Future<List<TorrentContent>> fileList(String id) async =>
-      (jsonDecode(await _listFiles(id)) as List).
-      map((file) => new TorrentContent(
-        name: file['name']['0'],
-        size: _formatBytes(int.parse(file['size']['0']), 2),
-        //name: (()=> file['name']['0']).handleError(onError: (_)=> file['name'][0]),
-        //size: _formatBytes(int.parse((()=> file['size']['0']).handleError(onError: (_)=> file['size'][0])), 2),
-      ),).
-      toList();
+  // static Future<String> _listFiles(String id) async => (await http.get(_listFilesUrl + Uri.encodeComponent(id))).body;
+  // static Future<String> _search(String query) async => (await http.get("https://apibay.org/q.php?q=" + Uri.encodeComponent(query))).body;
+  static Future<List<Torrent>> search(String query) async  {
+    Uri uri = Uri.https("apibay.org","/q.php", {'q': query});
+    print(uri);
+    var response = await http.get( uri);
+    var data = jsonDecode(response.body) as List;
+    var torrents = data.map((torrent) => new Torrent(
+      added: torrent['added'],
+      category: _categories[int.parse(torrent['category'])],
+      categoryIcon: _categoriesIcons[int.parse(torrent['category'])],
+      id: torrent['id'],
+      leechers: torrent['leechers'],
+      magnetUrl: _magnetUrl(torrent['info_hash'], torrent['name']),
+      name: torrent['name'],
+      num_files: torrent['num_files'],
+      seeders: torrent['seeders'],
+      size: _formatBytes(int.parse(torrent['size']), 2),
+      username: torrent['username'],
+    )).toList();
+    return torrents;
+  }
+  // static Future<List<Torrent>> searchTorrents(String query) async =>
+  //     (jsonDecode(await _search(query)) as List).
+  //     map((torrent) => new Torrent(
+  //       added: torrent['added'],
+  //       category: _categories[int.parse(torrent['category'])],
+  //       categoryIcon: _categoriesIcons[int.parse(torrent['category'])],
+  //       id: torrent['id'],
+  //       leechers: torrent['leechers'],
+  //       magnetUrl: _magnetUrl(torrent['info_hash'], torrent['name']),
+  //       name: torrent['name'],
+  //       num_files: torrent['num_files'],
+  //       seeders: torrent['seeders'],
+  //       size: _formatBytes(int.parse(torrent['size']), 2),
+  //       username: torrent['username'],),).
+  //     toList();
+  // static Future<List<TorrentContent>> fileList(String id) async =>
+  //     (jsonDecode(await _listFiles(id)) as List).
+  //     map((file) => new TorrentContent(
+  //       name: file['name']['0'],
+  //       size: _formatBytes(int.parse(file['size']['0']), 2),
+  //       //name: (()=> file['name']['0']).handleError(onError: (_)=> file['name'][0]),
+  //       //size: _formatBytes(int.parse((()=> file['size']['0']).handleError(onError: (_)=> file['size'][0])), 2),
+  //     ),).
+  //     toList();
 
   static String _formatBytes(int bytes, int decimals) => bytes <= 0 ? "0 B" :
   (log(bytes) / log(1024)).floor().let((it) => ((bytes / pow(1024, it)).toStringAsFixed(decimals)) + _suffixes[it]);

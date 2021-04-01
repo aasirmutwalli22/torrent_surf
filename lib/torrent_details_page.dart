@@ -16,7 +16,7 @@ class _TorrentDetailsPageState extends State<TorrentDetailsPage> {
   @override void initState() {
     super.initState();
     setState(() {
-      fileList = ThePirateBay.fileList(widget.torrent.id);
+      // fileList = ThePirateBay.fileList(widget.torrent.id);
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:torrent_surf/query_page.dart';
 import 'package:torrent_surf/torrent_search_page.dart';
 
 void main() => runApp(MyApp());
@@ -10,16 +11,12 @@ class MyApp extends StatelessWidget {
     debugShowCheckedModeBanner: false,
     title: 'Flutter Demo',
     theme: ThemeData.light().copyWith(
-      primaryColor: Colors.indigo[500],
+      primaryColor: Colors.deepPurple[400],
       accentColor: Colors.red[500],
       scaffoldBackgroundColor: Colors.white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme.of(context).copyWith(
-        elevation: 0,
-        color: Colors.white,
-        brightness: Theme.of(context).brightness,
-        textTheme: Theme.of(context).textTheme.apply(),
-        iconTheme: IconTheme.of(context).copyWith(color: Colors.grey[800],),
+        // color: Colors.white
       ),
     ),
     darkTheme: ThemeData.dark().copyWith(
@@ -29,12 +26,11 @@ class MyApp extends StatelessWidget {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme.of(context).copyWith(
         elevation: 0,
-        color: Colors.grey[900],
+        color: Colors.grey[800],
         brightness: Theme.of(context).brightness,
-        textTheme: Theme.of(context).textTheme.apply(),
         iconTheme: IconTheme.of(context).copyWith(color: Colors.white,),
       ),
     ),
-    home: TorrentSearchPage(),
+    home: QueryPage(),
   );
 }
